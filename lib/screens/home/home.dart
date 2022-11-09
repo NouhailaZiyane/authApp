@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 class home extends StatelessWidget {
   const home ({Key? key}) : super(key: key);
@@ -39,6 +40,10 @@ class home extends StatelessWidget {
             fontSize: 36
           )),
           SizedBox(height: 20,),
+      GestureDetector(
+        onTap: (){
+          FirebaseAuth.instance.signOut();
+        },child:
           Container(
             width: w * 0.5,
             height: h * 0.08,
@@ -55,7 +60,7 @@ class home extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       color: Colors.white),
                 )),
-          ),
+          )),
         ],
       ),
     );

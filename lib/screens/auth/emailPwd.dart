@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/auth/auth.dart';
+import 'package:flutter_application_1/main.dart';
 
 import '../../services/auth.dart';
 
@@ -20,6 +21,10 @@ class _EmailPasswordSignupState extends State<EmailPasswordSignup> {
   final TextEditingController passwordController = TextEditingController();
 
   Future signUpUser() async {
+    showDialog(context: context,
+        barrierDismissible: false,
+        builder: (context)=> Center(child: CircularProgressIndicator()),
+    );
     try{
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text.trim(),
@@ -28,7 +33,7 @@ class _EmailPasswordSignupState extends State<EmailPasswordSignup> {
     } on FirebaseAuthException catch(e){
       print(e);
     }
-
+   navigatorKey.currentState!.popUntil((route)=> route.isFirst);
   }
 
   @override
@@ -108,6 +113,9 @@ class _EmailPasswordSignupState extends State<EmailPasswordSignup> {
                             color: Colors.grey.withOpacity(0.2))
                       ]),
                   child: TextField(
+                    obscureText: true,
+                    enableSuggestions: false,
+                    autocorrect: false,
                     controller: passwordController,
                     decoration: InputDecoration(
                         hintText: "Password",

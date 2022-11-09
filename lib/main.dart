@@ -11,11 +11,17 @@ Future main() async {
   await Firebase.initializeApp();
   runApp(MyApp());
 }
+final navigatorKey =GlobalKey<NavigatorState>();
+
 
 class MyApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+
+        navigatorKey: navigatorKey,
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
