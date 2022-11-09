@@ -1,3 +1,4 @@
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:get/get.dart';
@@ -18,12 +19,16 @@ class _EmailPasswordSignupState extends State<EmailPasswordSignup> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  void signUpUser() async {
-    AuthService(FirebaseAuth.instance).signUpWithEmail(
-      email: emailController.text,
-      password: passwordController.text,
-      context: context,
-    );
+  Future signUpUser() async {
+    try{
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+    } on FirebaseAuthException catch(e){
+      print(e);
+    }
+
   }
 
   @override
@@ -77,6 +82,7 @@ class _EmailPasswordSignupState extends State<EmailPasswordSignup> {
                             color: Colors.grey.withOpacity(0.2))
                       ]),
                   child: TextField(
+                    controller: emailController,
                     decoration: InputDecoration(
                         hintText: "Email",
                         prefixIcon: Icon(Icons.email, color: Colors.deepOrangeAccent,),
@@ -102,6 +108,7 @@ class _EmailPasswordSignupState extends State<EmailPasswordSignup> {
                             color: Colors.grey.withOpacity(0.2))
                       ]),
                   child: TextField(
+                    controller: passwordController,
                     decoration: InputDecoration(
                         hintText: "Password",
                         prefixIcon: Icon(Icons.password, color: Colors.deepOrangeAccent,),
@@ -127,14 +134,16 @@ class _EmailPasswordSignupState extends State<EmailPasswordSignup> {
                     ),
                   ],
                 )
-
-
               ],
             ),
           ),
           SizedBox(
             height: 70,
           ),
+      GestureDetector(
+        onTap: (){
+          signUpUser();
+        },child:
           Container(
             width: w*0.5,
             height: h * 0.08,
@@ -142,6 +151,7 @@ class _EmailPasswordSignupState extends State<EmailPasswordSignup> {
               borderRadius: BorderRadius.circular(50),
               image: DecorationImage(
                   image: AssetImage("assets/loginbtn.png"), fit: BoxFit.cover),
+               // recognizer: TapGestureRecognizer()..onTap=()=>
             ),
             child:
                 Center( child:
@@ -150,8 +160,7 @@ class _EmailPasswordSignupState extends State<EmailPasswordSignup> {
                 style:
                 TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.white)
             , )),
-
-          ),
+          )),
           SizedBox(
             height: h*0.1,
           ),
@@ -174,8 +183,6 @@ class _EmailPasswordSignupState extends State<EmailPasswordSignup> {
             ]
             )
             ),
-
-
         ],
       ),
     );
