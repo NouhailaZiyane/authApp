@@ -6,6 +6,7 @@ class home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
+    final user= FirebaseAuth.instance.currentUser!;
     double h = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -38,7 +39,15 @@ class home extends StatelessWidget {
             fontWeight: FontWeight.bold,
             color: Colors.black54,
             fontSize: 36
-          )),
+          ))  ,
+        SizedBox(height: 10,),
+    Text(user.email!,
+              style:
+              TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.deepOrangeAccent,
+                  fontSize: 25
+              )),
           SizedBox(height: 20,),
       GestureDetector(
         onTap: (){
