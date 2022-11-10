@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/keyF.dart';
 import 'package:flutter_application_1/screens/auth/auth.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import 'emailPwd.dart';
 
@@ -23,27 +26,29 @@ class _resetPassState extends State<resetPass> {
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         body: Column(children: [
-          Stack(
-        children: <Widget>[
-          Container(
-            width: w,
-            height: h * 0.3,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("assets/loginimg.png"), fit: BoxFit.cover),
-            )),
-        Positioned(
-            top: 55,
-            left: 10,
-            child:
-          Container(
-            child:
-              Image.asset("assets/61022.png",
-                height: 60,
-                width: 40,)
-            ,
-          )
-        ),
+          Stack(children: <Widget>[
+            Container(
+                width: w,
+                height: h * 0.3,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("assets/loginimg.png"),
+                      fit: BoxFit.cover),
+                )),
+            Positioned(
+              top: 55,
+              left: 10,
+              child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=> EmailPasswordSignup()));
+                  },
+                  child: Container(
+                      child: Image.asset(
+                    "assets/61022.png",
+                    height: 60,
+                    width: 40,
+                  ))),
+            )
           ]),
           SizedBox(
             height: 20,
@@ -95,41 +100,45 @@ class _resetPassState extends State<resetPass> {
             height: 70,
           ),
           GestureDetector(
-              onTap: (){
+              onTap: () {
                 resetPass();
-              },child:
-          Container(
-            width: w*0.5,
-            height: h * 0.08,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50),
-              image: DecorationImage(
-                  image: AssetImage("assets/loginbtn.png"), fit: BoxFit.cover),
-              // recognizer: TapGestureRecognizer()..onTap=()=>
-            ),
-            child:
-            Center( child:
-            Text(
-              "Reset Password",
-              style:
-              TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white)
-              , )),
-          )),
+              },
+              child: Container(
+                width: w * 0.5,
+                height: h * 0.08,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  image: DecorationImage(
+                      image: AssetImage("assets/loginbtn.png"),
+                      fit: BoxFit.cover),
+                  // recognizer: TapGestureRecognizer()..onTap=()=>
+                ),
+                child: Center(
+                    child: Text(
+                  "Reset Password",
+                  style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                )),
+              )),
         ]));
-
   }
-  Future resetPass() async{
-    showDialog(context: context,
+
+  Future resetPass() async {
+    showDialog(
+      context: context,
       barrierDismissible: false,
-      builder: (context)=> Center(child: CircularProgressIndicator()),
+      builder: (context) => Center(child: CircularProgressIndicator()),
     );
     try {
       await FirebaseAuth.instance
           .sendPasswordResetEmail(email: emailController.text.trim());
       keyF.snackbar("Password Reset Email Sent");
-      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>  EmailPasswordSignup(),));
-
-    }on FirebaseAuthException catch(e){
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => EmailPasswordSignup(),
+      ));
+    } on FirebaseAuthException catch (e) {
       print(e.message);
       keyF.snackbar(e.message);
       Navigator.of(context).pop();
