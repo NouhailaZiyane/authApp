@@ -1,6 +1,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter_application_1/screens/auth/resetPass.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/auth/auth.dart';
@@ -130,17 +131,23 @@ class _EmailPasswordSignupState extends State<EmailPasswordSignup> {
                 SizedBox(
                   height: 20,
                 ),
-                Row(
-                  children: [
-                    Expanded(child: Container()),
-                    Text(
-                      "Forgot your password?",
-                      style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.grey
+                GestureDetector(
+                  onTap: () {
+                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=> resetPass(),));
+                  } ,
+                  child: Row(
+                    children: [
+                      Expanded(child: Container()),
+                      Text(
+                        "Forgot your password?",
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.black54,
+                          decoration: TextDecoration.underline
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 )
               ],
             ),

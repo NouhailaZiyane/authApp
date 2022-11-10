@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import '../../main.dart';
+import 'package:flutter_application_1/keyF.dart';
 
 class signUp extends StatefulWidget {
   const signUp({Key? key}) : super(key: key);
@@ -37,7 +38,9 @@ class _signUpState extends State<signUp> {
         );
       } on FirebaseAuthException catch (e) {
         print(e);
+        keyF.snackbar(e.message);
       }
+
 
     navigatorKey.currentState!.popUntil((route)=> route.isFirst);
   }

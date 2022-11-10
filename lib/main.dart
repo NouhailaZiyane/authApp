@@ -2,10 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/auth/auth.dart';
 import 'package:flutter_application_1/screens/auth/emailPwd.dart';
+import 'package:flutter_application_1/screens/auth/auth.dart';
 import 'package:flutter_application_1/screens/home/home.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
-
+import 'keyF.dart';
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-
+      scaffoldMessengerKey: keyF.messenger,
         navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
